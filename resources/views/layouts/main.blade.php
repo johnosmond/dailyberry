@@ -7,6 +7,7 @@
     <title>The Daily Berry</title>
 </head>
 <body>
+    <x-navbar/>
     @yield('content')
 </body>
 </html>
