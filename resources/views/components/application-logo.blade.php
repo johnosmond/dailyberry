@@ -1,0 +1,1 @@
+<img src="{{ URL::asset('/images/berry-512.ico') }}" alt="App Icon" {{ $attributes }} />
