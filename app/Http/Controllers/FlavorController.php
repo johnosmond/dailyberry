@@ -12,7 +12,7 @@ class FlavorController extends Controller
      */
     public function index()
     {
-        $flavors = Flavor::all();
+        $flavors = Flavor::paginate(10);
         return view('flavors.index')->with('flavors', $flavors);
     }
 

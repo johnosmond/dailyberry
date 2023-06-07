@@ -12,5 +12,4 @@ class Flavor extends Model
 
     protected $guarded = [];
 
-    
 }
