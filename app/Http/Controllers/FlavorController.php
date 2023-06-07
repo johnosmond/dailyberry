@@ -12,7 +12,8 @@ class FlavorController extends Controller
      */
     public function index()
     {
-        $flavors = Flavor::paginate(10);
+        // $flavors = Flavor::orderBy('flavor')->paginate(10);
+        $flavors = Flavor::orderBy('flavor')->get();
         return view('flavors.index')->with('flavors', $flavors);
     }
 
