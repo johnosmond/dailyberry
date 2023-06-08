@@ -12,19 +12,20 @@ class FlavorController extends Controller
      */
     public function index(Request $request)
     {
+        $flavor = $request->input('flavor');
         $sort = $request->query('sort');
         $dir = $request->query('dir');
         $dirstr = '&dir=asc';
 
         if (isset($sort)) {
             if (isset($dir)) {
-                $flavors = Flavor::orderBy($sort, $dir)->paginate(10);
+                $flavors = Flavor::when($flavor, fn($query, $flavor) => $query->flavor($flavor))->orderBy($sort, $dir)->paginate(10);
                 $dirstr = ($dir == 'asc') ? '&dir=desc' : '&dir=asc';
             } else {
-                $flavors = Flavor::orderBy($sort)->paginate(10);
+                $flavors = Flavor::when($flavor, fn($query, $flavor) => $query->flavor($flavor))->orderBy($sort)->paginate(10);
             }
         } else {
-            $flavors = Flavor::orderBy('flavor')->paginate(10);
+            $flavors = Flavor::when($flavor, fn($query, $flavor) => $query->flavor($flavor))->orderBy('flavor')->paginate(10);
         }
 
         $data = [
