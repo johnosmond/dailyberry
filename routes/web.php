@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\FlavorController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FlavorController;
+use Symfony\Component\Console\Input\Input;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------

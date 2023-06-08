@@ -10,11 +10,29 @@ class FlavorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $flavors = Flavor::orderBy('flavor')->paginate(10);
-        $flavors = Flavor::orderBy('flavor')->get();
-        return view('flavors.index')->with('flavors', $flavors);
+        $sort = $request->query('sort');
+        $dir = $request->query('dir');
+        $dirstr = '&dir=asc';
+
+        if (isset($sort)) {
+            if (isset($dir)) {
+                $flavors = Flavor::orderBy($sort, $dir)->paginate(10);
+                $dirstr = ($dir == 'asc') ? '&dir=desc' : '&dir=asc';
+            } else {
+                $flavors = Flavor::orderBy($sort)->paginate(10);
+            }
+        } else {
+            $flavors = Flavor::orderBy('flavor')->paginate(10);
+        }
+
+        $data = [
+            'flavors' => $flavors,
+            'dirstr' => $dirstr
+        ];
+
+        return view('flavors.index')->with($data);
     }
 
     /**
