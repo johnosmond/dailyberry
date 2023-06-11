@@ -13,24 +13,39 @@ class FlavorController extends Controller
     public function index(Request $request)
     {
         $flavor = $request->input('flavor');
+        $display_count = $request->input('display_count', "10");
+
         $sort = $request->query('sort');
         $dir = $request->query('dir');
-        $dirstr = '&dir=asc';
+        $dirstr = '&dir=asc'; // default
 
         if (isset($sort)) {
             if (isset($dir)) {
-                $flavors = Flavor::when($flavor, fn($query, $flavor) => $query->flavor($flavor))->orderBy($sort, $dir)->paginate(10);
+                if ($display_count == 'all') {
+                    $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy($sort, $dir)->get();
+                } else {
+                    $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy($sort, $dir)->paginate($display_count);
+                }
                 $dirstr = ($dir == 'asc') ? '&dir=desc' : '&dir=asc';
             } else {
-                $flavors = Flavor::when($flavor, fn($query, $flavor) => $query->flavor($flavor))->orderBy($sort)->paginate(10);
+                if ($display_count == 'all') {
+                    $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy($sort)->get();
+                } else {
+                    $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy($sort)->paginate($display_count);
+                }
             }
         } else {
-            $flavors = Flavor::when($flavor, fn($query, $flavor) => $query->flavor($flavor))->orderBy('flavor')->paginate(10);
+            if ($display_count == 'all') {
+                $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy('flavor')->get();
+            } else {
+                $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy('flavor')->paginate($display_count);
+            }
         }
 
         $data = [
             'flavors' => $flavors,
-            'dirstr' => $dirstr
+            'dirstr' => $dirstr,
+            'display_count' => $display_count
         ];
 
         return view('flavors.index')->with($data);
