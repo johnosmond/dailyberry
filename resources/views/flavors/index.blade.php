@@ -31,9 +31,10 @@
         </div>
     </div>
     <div class="pt-2">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-0 sm:px-2 md:px-4 lg:px-8">
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                <div class="px-6 text-gray-900 dark:text-gray-100" style="padding-bottom: 3rem;">
+                <div class="px-0 sm:px-2 md:px-4 lg:px-8 text-gray-900 dark:text-gray-100"
+                    style="padding-bottom: 3rem;">
                     <table class="table-fixed w-full mb-6">
                         <thead>
                             <tr class="text-gray-500">
@@ -53,7 +54,8 @@
                             @foreach ($flavors as $flavor)
                                 <tr class="odd:bg-gray-100">
                                     <td class="update_record text-sm md:text-base border px-4 py-2" data-name="flavor"
-                                        data-type="text" data-pk="{{ $flavor->id }}" data-title="Enter Flavor" data-class="testclass">
+                                        data-type="text" data-pk="{{ $flavor->id }}" data-title="Enter Flavor"
+                                        data-class="testclass">
                                         {{ $flavor->flavor }}</td>
                                     <td class="update_record text-sm md:text-base border px-4 py-2"
                                         data-name="description" data-type="text" data-pk="{{ $flavor->id }}"
@@ -66,7 +68,9 @@
                         </tbody>
                     </table>
                     @if ($flavors instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                        {{ $flavors->appends(request()->input())->links() }}
+                        <div class="px-4">
+                            {{ $flavors->appends(request()->input())->links() }}
+                        </div>
                     @endif
                 </div>
             </div>
@@ -91,7 +95,7 @@
             $('.update_record').editable({
                 url: "{{ route('flavor.update') }}",
                 type: 'text',
-                inputclass: 'w-full',
+                inputclass: 'w-full rounded',
                 emptytext: ''
             });
         </script>

@@ -20,3 +20,11 @@
 .editable-input {
     width: 90%;
 }
+.editable-buttons .editable-submit {
+    float: left;
+}
+.editable-buttons .editable-cancel {
+    clear: left;
+    float: left;
+    margin-left: 0;
+}
