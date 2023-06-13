@@ -90,6 +90,15 @@ class FlavorController extends Controller
     {
         //
     }
+    public function updateByAjax(Request $request)
+    {
+        if($request->ajax()) {
+            Flavor::find($request->pk)->update([
+                $request->name => $request->value
+            ]);
+            return response()->json(['success' => true]);
+        }
+    }
 
     /**
      * Remove the specified resource from storage.

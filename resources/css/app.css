@@ -15,3 +15,8 @@
 .select {
     @apply shadow-sm appearance-none border w-16 md:w-24 px-2 py-1 md:px-3 md:py-2 text-slate-700 leading-tight focus:outline-none rounded-md border-slate-300;
 }
+
+.editable-container.editable-inline,
+.editable-input {
+    width: 90%;
+}
