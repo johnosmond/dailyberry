@@ -32,37 +32,46 @@
     </div>
     <div class="pt-2">
         <div class="max-w-7xl mx-auto px-0 sm:px-2 md:px-4 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                <div class="px-0 sm:px-2 md:px-4 lg:px-8 text-gray-900 dark:text-gray-100"
-                    style="padding-bottom: 3rem;">
+            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg pb-3">
+                <div class="px-0 sm:px-2 md:px-4 lg:px-8 text-gray-900 dark:text-gray-100">
                     <table class="table-fixed w-full mb-6">
                         <thead>
                             <tr class="text-gray-500">
-                                <th class="w-[30%] px-4 py-2 md:w-[20%]"><a
+                                <th class="w-[25%] px-4 py-2 md:w-[20%]"><a
                                         href="{{ route('flavors.index') . '?sort=flavor' . $dirstr }}"
                                         class="text-base md:text-lg font-bold">Flavor</a></th>
                                 <th class="w-[70%] px-4 py-2"><span
                                         class="text-base md:text-lg font-bold">Description</span></th>
                                 <th class="w-[10%] px-4 py-2 hidden md:table-cell"><a
                                         href="{{ route('flavors.index') . '?sort=times_used' . $dirstr }}"
-                                        class="text-base md:text-lg font-bold"># <span
+                                        class="text-base md:text-base font-bold"># <span
                                             class="hidden lg:inline-block">Used</span></a>
                                 </th>
+                                <th class="w-[5%] hidden sm:table-cell">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($flavors as $flavor)
-                                <tr class="odd:bg-gray-100">
+                                <tr class="odd:bg-gray-100 dark:odd:bg-gray-600">
                                     <td class="update_record text-sm md:text-base border px-4 py-2" data-name="flavor"
-                                        data-type="text" data-pk="{{ $flavor->id }}" data-title="Enter Flavor"
-                                        data-class="testclass">
-                                        {{ $flavor->flavor }}</td>
+                                        data-type="text" data-pk="{{ $flavor->id }}">
+                                        {{ $flavor->flavor }}
+                                    </td>
                                     <td class="update_record text-sm md:text-base border px-4 py-2"
-                                        data-name="description" data-type="text" data-pk="{{ $flavor->id }}"
-                                        data-title="Enter Description">
-                                        {{ $flavor->description }}</td>
+                                        data-name="description" data-type="text" data-pk="{{ $flavor->id }}">
+                                        {{ $flavor->description }}
+                                    </td>
                                     <td class="text-sm md:text-base border px-4 py-2 hidden md:table-cell">
-                                        {{ $flavor->times_used }}</td>
+                                        {{ $flavor->times_used }}
+                                    </td>
+                                    <td>
+                                        <form method="post" class="delete-form"
+                                            data-route="{{ route('flavor.delete') }}">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -86,6 +95,7 @@
             function submitAfterDisplayChange() {
                 document.getElementById('frmSearch').submit();
             }
+
             $.fn.editable.defaults.mode = 'inline';
             $.ajaxSetup({
                 headers: {
@@ -98,6 +108,43 @@
                 inputclass: 'w-full rounded',
                 emptytext: ''
             });
+
+            $(document).ready(function(e){
+                e.preventDefault();
+                .ajax({
+                    type: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: $(this).data('route'),
+                    data: {
+                        '_method': 'delete'
+                    },
+                    success: function(response, textStatus, xhr) {
+                        alert(response),
+                        window.location = '/flavors'
+                    }
+                });
+            });
+
+            // $('.delete_record').click(function(e) {
+            //     e.preventDefault();
+            //     if (confirm('Are you sure you want to delete this flavor?')) {
+            //         $.ajax({
+            //             type: 'post',
+            //             headers: {
+            //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //             },
+            //             url: "{{ route('flavor.delete') }}",
+            //             data: {
+            //                 '_method': 'delete'
+            //             },
+            //             success: function(response, textStatus, xhr) {
+            //                 console.log('test' + response);
+            //             }
+            //         });
+            //     }
+            // });
         </script>
     </x-slot>
 </x-app-layout>
