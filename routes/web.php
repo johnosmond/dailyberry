@@ -30,8 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::post('flavor', [FlavorController::class, 'updateByAjax'])->name('flavor.update');
-Route::delete('flavor', [FlavorController::class, 'deleteByAjax'])->name('flavor.delete');
+// Route::post('flavor', [FlavorController::class, 'updateByAjax'])->name('flavor.update');
+// Route::delete('flavor', [FlavorController::class, 'deleteByAjax'])->name('flavor.delete');
 Route::resource('flavors', FlavorController::class)->middleware('auth');
 
 require __DIR__.'/auth.php';

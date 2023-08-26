@@ -72,7 +72,7 @@ class FlavorController extends Controller
      */
     public function show(Flavor $flavor)
     {
-        //
+        return $flavor->flavor;
     }
 
     /**

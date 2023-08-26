@@ -65,13 +65,11 @@
                                         {{ $flavor->times_used }}
                                     </td>
                                     <td>
-                                        <form method="post" action="{{ route('flavors.destroy', $flavor) }}"
-                                            class="delete-form" data-route="{{ route('flavors.destroy', $flavor) }}"
-                                            onsubmit="return confirmDelete()">
+                                        <form method="post" class="delete-form"
+                                            data-route="{{ route('flavor.delete') }}">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm"><i
-                                                    class="fa-regular fa-trash-can"></i></button>
+                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -88,10 +86,65 @@
         </div>
     </div>
     <x-slot name="scripts">
-        <script>
-            function confirmDelete() {
-                return confirm("Are you sure you want to delete this flavor record?");
+        <script type="text/javascript">
+            function clearFlavor() {
+                document.getElementById('flavor').value = "";
+                document.getElementById('frmSearch').submit();
             }
+
+            function submitAfterDisplayChange() {
+                document.getElementById('frmSearch').submit();
+            }
+
+            $.fn.editable.defaults.mode = 'inline';
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            });
+            $('.update_record').editable({
+                url: "{{ route('flavor.update') }}",
+                type: 'text',
+                inputclass: 'w-full rounded',
+                emptytext: ''
+            });
+
+            $(document).ready(function(e){
+                e.preventDefault();
+                .ajax({
+                    type: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: $(this).data('route'),
+                    data: {
+                        '_method': 'delete'
+                    },
+                    success: function(response, textStatus, xhr) {
+                        alert(response),
+                        window.location = '/flavors'
+                    }
+                });
+            });
+
+            // $('.delete_record').click(function(e) {
+            //     e.preventDefault();
+            //     if (confirm('Are you sure you want to delete this flavor?')) {
+            //         $.ajax({
+            //             type: 'post',
+            //             headers: {
+            //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //             },
+            //             url: "{{ route('flavor.delete') }}",
+            //             data: {
+            //                 '_method': 'delete'
+            //             },
+            //             success: function(response, textStatus, xhr) {
+            //                 console.log('test' + response);
+            //             }
+            //         });
+            //     }
+            // });
         </script>
     </x-slot>
 </x-app-layout>
