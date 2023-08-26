@@ -101,9 +101,10 @@ class FlavorController extends Controller
     }
 
     public function deleteByAjax(Request $request) {
+            echo('test');
         if($request->ajax()) {
             // Flavor::find($request->pk)->delete();
-            dd('done');
+            dd($request);
             return response()->json(['success' => true]);
         }
     }
