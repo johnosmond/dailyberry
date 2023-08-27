@@ -18,3 +18,4 @@ yarn-error.log
 /.idea
 /.vscode
 .ftpquota
+database/seeders/UserSeeder.php
