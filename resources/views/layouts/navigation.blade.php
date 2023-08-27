@@ -17,23 +17,23 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('calendar.index')" :active="request()->routeIs('calendar.index')">
-                        {{ __('Flavors Calendar') }}
+                    <x-nav-link :href="route('flavors.index')" :active="request()->routeIs('flavors.index')">
+                        {{ __('Flavors') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('flavors.index')" :active="request()->routeIs('flavors.index')">
-                        {{ __('Flavors List') }}
+                    <x-nav-link :href="route('calendars.index')" :active="request()->routeIs('calendar.index')">
+                        {{ __('Calendars') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('specials.index')" :active="request()->routeIs('users.index')">
+                        {{ __('Specials') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('stores.index')" :active="request()->routeIs('stores.index')">
                         {{ __('Stores') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
-                        {{ __('Users') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -99,6 +99,21 @@
         <div class="space-y-1">
             <x-responsive-nav-link :href="route('flavors.index')" :active="request()->routeIs('flavors.index')">
                 {{ __('Flavors') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="space-y-1">
+            <x-responsive-nav-link :href="route('calendars.index')" :active="request()->routeIs('flavors.index')">
+                {{ __('Calendars') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="space-y-1">
+            <x-responsive-nav-link :href="route('specials.index')" :active="request()->routeIs('flavors.index')">
+                {{ __('Specials') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="space-y-1">
+            <x-responsive-nav-link :href="route('stores.index')" :active="request()->routeIs('flavors.index')">
+                {{ __('Stores') }}
             </x-responsive-nav-link>
         </div>
 

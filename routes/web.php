@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\CurrentSpecialController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FlavorController;
+use App\Http\Controllers\FlavorDateController;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreController;
+use App\Models\CurrentSpecial;
+use App\Models\FlavorDate;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,16 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/calendar', function() {
-    return 'calendar';
-})->name('calendar.index');
-
-Route::get('/users', function() {
-    return 'users';
-})->name('users.index');
 
 Route::resource('flavors', FlavorController::class)->middleware('auth');
 
 Route::resource('stores', StoreController::class)->middleware('auth');
+
+Route::resource('calendars', FlavorDateController::class)->middleware('auth');
+
+Route::resource('specials', CurrentSpecialController::class);
 
 require __DIR__.'/auth.php';

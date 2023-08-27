@@ -17,15 +17,8 @@ class Store extends Model
         return $this->hasMany(FlavorDate::class);
     }
 
-    public function currentSpecialConcrete() {
-        return $this->hasOne(CurrentSpecialConcrete::class);
+    public function currentSpecial() {
+        return $this->hasOne(CurrentSpecial::class);
     }
 
-    public function currentSpecialFood() {
-        return $this->hasOne(CurrentSpecialFood::class);
-    }
-
-    public function currentSpecialSoups() {
-        return $this->hasOne(CurrentSpecialSoups::class);
-    }
 }

@@ -12,7 +12,7 @@ class FlavorDateController extends Controller
      */
     public function index()
     {
-        //
+        return 'Calendar';
     }
 
     /**
