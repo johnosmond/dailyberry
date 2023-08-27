@@ -37,16 +37,17 @@
                     <table class="table-fixed w-full mb-6">
                         <thead>
                             <tr class="text-gray-500">
-                                <th class="w-[25%] px-4 py-2 md:w-[20%]"><a
+                                <th class="w-[30%] px-4 py-2 md:w-[20%]"><a
                                         href="{{ route('flavors.index') . '?sort=flavor' . $dirstr }}"
                                         class="text-base md:text-lg font-bold">Flavor</a></th>
-                                <th class="w-[70%] px-4 py-2"><span
+                                <th class="w-[50%] px-4 py-2"><span
                                         class="text-base md:text-lg font-bold">Description</span></th>
                                 <th class="w-[10%] px-4 py-2 hidden md:table-cell"><a
                                         href="{{ route('flavors.index') . '?sort=times_used' . $dirstr }}"
                                         class="text-base md:text-base font-bold"># <span
                                             class="hidden lg:inline-block">Used</span></a>
                                 </th>
+                                <th class="w-[5%] hidden sm:table-cell">&nbsp;</th>
                                 <th class="w-[5%] hidden sm:table-cell">&nbsp;</th>
                             </tr>
                         </thead>
@@ -64,20 +65,33 @@
                                     <td class="text-sm md:text-base border px-4 py-2 hidden md:table-cell">
                                         {{ $flavor->times_used }}
                                     </td>
-                                    <td>
-                                        <form method="post" action="{{ route('flavors.destroy', $flavor) }}"
-                                            class="delete-form" data-route="{{ route('flavors.destroy', $flavor) }}"
-                                            onsubmit="return confirmDelete()">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm"><i
-                                                    class="fa-regular fa-trash-can"></i></button>
-                                        </form>
+                                    <td class="border content-center">
+                                        <div class="flex content-center justify-center">
+                                            <a href="{{ route('flavors.edit', ['flavor' => $flavor]) }}"
+                                                class="btn btn-primary">
+                                                <i class="fa-regular fa-edit"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="border content-center">
+                                        <div class="flex items-center justify-center">
+                                            <form method="POST" action="{{ route('flavors.destroy', $flavor) }}"
+                                                data-route="{{ route('flavors.destroy', $flavor) }}"
+                                                onsubmit="return confirmDelete('{{ $flavor->flavor }}')">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                    <i class="fa-regular fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <a href="{{ route('flavors.create') }}" class="btn btn-primary inline-block mb-4">Add a New
+                        Flavor</a>
                     @if ($flavors instanceof \Illuminate\Pagination\LengthAwarePaginator)
                         <div class="px-4">
                             {{ $flavors->appends(request()->input())->links() }}
@@ -89,8 +103,17 @@
     </div>
     <x-slot name="scripts">
         <script>
-            function confirmDelete() {
-                return confirm("Are you sure you want to delete this flavor record?");
+            function clearFlavor() {
+                document.getElementById('flavor').value = "";
+                document.getElementById('frmSearch').submit();
+            }
+
+            function confirmDelete(flavor) {
+                return confirm("Are you sure you want to delete flavor: ${flavor} ?");
+            }
+
+            function submitAfterDisplayChange() {
+                document.getElementById("frmSearch").submit();
             }
         </script>
     </x-slot>

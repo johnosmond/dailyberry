@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FlavorController;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,8 +31,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::post('flavor', [FlavorController::class, 'updateByAjax'])->name('flavor.update');
-// Route::delete('flavor', [FlavorController::class, 'deleteByAjax'])->name('flavor.delete');
+Route::get('/calendar', function() {
+    return 'calendar';
+})->name('calendar.index');
+
+Route::get('/users', function() {
+    return 'users';
+})->name('users.index');
+
 Route::resource('flavors', FlavorController::class)->middleware('auth');
+
+Route::resource('stores', StoreController::class)->middleware('auth');
 
 require __DIR__.'/auth.php';

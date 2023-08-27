@@ -18,4 +18,8 @@ class Flavor extends Model
     {
         return $query->where('flavor', 'LIKE', '%' . $flavor . '%');
     }
+
+    public function flavorDates() {
+        return $this->hasMany(FlavorDate::class);
+    }
 }
