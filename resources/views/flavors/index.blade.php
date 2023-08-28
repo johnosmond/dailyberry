@@ -3,12 +3,22 @@
         {{ __('Flavors List') }}
     </x-slot>
     <div class="pt-4">
-        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div class="main-level-1">
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-error" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
             <form name="frmSearch" id="frmSearch" method="GET" action="{{ route('flavors.index') }}">
                 <div class="flex gap-2 md:gap-4">
                     <div class="w-full md:w-1/2">
-                        <input class="input" type="text" name="flavor" id="flavor" placeholder="Search by Flavor"
-                            value="{{ request('flavor') }}" />
+                        <input class="input" type="text" name="flavor" id="flavor"
+                            placeholder="Search by Flavor" value="{{ request('flavor') }}" />
                     </div>
                     <div class="">
                         <button class="btn" type="submit">Search</button>
@@ -20,20 +30,24 @@
                         <label for="display_count" class="text-gray-400 hidden md:inline-block">Display:</label>
                         <select name="display_count" id="display_count" class="select" value="{{ $display_count }}"
                             onchange="submitAfterDisplayChange()">
-                            <option value="10" {{ $display_count == '10' ? 'selected' : '' }}>10</option>
-                            <option value="20" {{ $display_count == '20' ? 'selected' : '' }}>20</option>
-                            <option value="50" {{ $display_count == '50' ? 'selected' : '' }}>50</option>
-                            <option value="all" {{ $display_count == 'all' ? 'selected' : '' }}>(All)</option>
+                            <option value="10" {{ $display_count == '10' ? 'selected' : '' }}>10
+                            </option>
+                            <option value="20" {{ $display_count == '20' ? 'selected' : '' }}>20
+                            </option>
+                            <option value="50" {{ $display_count == '50' ? 'selected' : '' }}>50
+                            </option>
+                            <option value="all" {{ $display_count == 'all' ? 'selected' : '' }}>(All)
+                            </option>
                         </select>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="pt-2">
-        <div class="max-w-7xl mx-auto px-0 sm:px-2 md:px-4 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg pb-3">
-                <div class="px-0 sm:px-2 md:px-4 lg:px-8 text-gray-900 dark:text-gray-100">
+    <div class="pt-4">
+        <div class="main-level-1">
+            <div class="main-level-2">
+                <div class="main-level-3">
                     <table class="table-fixed w-full mb-6">
                         <thead>
                             <tr class="text-gray-500">
@@ -47,8 +61,8 @@
                                         class="text-base md:text-base font-bold"># <span
                                             class="hidden lg:inline-block">Used</span></a>
                                 </th>
-                                <th class="w-[5%] hidden sm:table-cell">&nbsp;</th>
-                                <th class="w-[5%] hidden sm:table-cell">&nbsp;</th>
+                                <th class="w-[5%] min-w-min">&nbsp;</th>
+                                <th class="w-[5%] min-w-min">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,7 +79,7 @@
                                     <td class="text-sm md:text-base border px-4 py-2 hidden md:table-cell">
                                         {{ $flavor->times_used }}
                                     </td>
-                                    <td class="border content-center">
+                                    <td class="border content-center min-w-min">
                                         <div class="flex content-center justify-center">
                                             <a href="{{ route('flavors.edit', ['flavor' => $flavor]) }}"
                                                 class="btn btn-primary">
@@ -73,7 +87,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="border content-center">
+                                    <td class="border content-center min-w-min">
                                         <div class="flex items-center justify-center">
                                             <form method="POST" action="{{ route('flavors.destroy', $flavor) }}"
                                                 data-route="{{ route('flavors.destroy', $flavor) }}"
@@ -109,7 +123,7 @@
             }
 
             function confirmDelete(flavor) {
-                return confirm("Are you sure you want to delete flavor: ${flavor} ?");
+                return confirm(`Are you sure you want to delete flavor: ${flavor} ?`);
             }
 
             function submitAfterDisplayChange() {

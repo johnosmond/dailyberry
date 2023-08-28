@@ -18,32 +18,12 @@ class FlavorController extends Controller
         $flavor = $request->input('flavor');
         $display_count = $request->input('display_count', "10");
 
-        $sort = $request->query('sort');
-        $dir = $request->query('dir');
-        $dirstr = '&dir=asc'; // default
+        // new
+        $sort = $request->query('sort', 'flavor');
+        $dir = $request->query('dir', 'asc');
+        $dirstr = $dir == 'asc' ? '&dir=desc' : '&dir=asc';
 
-        if (isset($sort)) {
-            if (isset($dir)) {
-                if ($display_count == 'all') {
-                    $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy($sort, $dir)->get();
-                } else {
-                    $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy($sort, $dir)->paginate($display_count);
-                }
-                $dirstr = ($dir == 'asc') ? '&dir=desc' : '&dir=asc';
-            } else {
-                if ($display_count == 'all') {
-                    $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy($sort)->get();
-                } else {
-                    $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy($sort)->paginate($display_count);
-                }
-            }
-        } else {
-            if ($display_count == 'all') {
-                $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy('flavor')->get();
-            } else {
-                $flavors = Flavor::when($flavor, fn ($query, $flavor) => $query->flavor($flavor))->orderBy('flavor')->paginate($display_count);
-            }
-        }
+        $flavors = $this->applyFiltersAndSort($flavor, $sort, $dir, $display_count);
 
         $data = [
             'flavors' => $flavors,
@@ -52,6 +32,12 @@ class FlavorController extends Controller
         ];
 
         return view('flavors.index')->with($data);
+    }
+
+    private function applyFiltersAndSort($flavor, $sort, $dir, $display_count)
+    {
+        $query = Flavor::flavor($flavor)->sort($sort, $dir);
+        return $display_count == 'all' ? $query->get() : $query->paginate($display_count);
     }
 
     /**
@@ -67,15 +53,22 @@ class FlavorController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'flavor' => 'required|string|max:255',
+        $rules = [
+            'flavor' => 'required|unique:flavors|string|max:255',
             'description' => 'nullable|string',
-        ]);
+        ];
+
+        $messages = [
+            'flavor.required' => 'Flavor is a required field.',
+            'flavor.unique' => 'That flavor is already in the list.'
+        ];
+
+        $validatedData = $request->validate($rules, $messages);
 
         $flavor = Flavor::create($validatedData);
 
         return redirect()->route('flavors.show', ['flavor' => $flavor])
-            ->with('success', 'Flavor was updated successfully.');
+            ->with('success', 'Flavor was added successfully.');
     }
 
     /**
@@ -99,14 +92,21 @@ class FlavorController extends Controller
      */
     public function update(Request $request, Flavor $flavor): RedirectResponse
     {
-        $validated = $request->validate([
-            'flavor' => 'required|max:255',
+        $rules = [
+            'flavor' => 'required|string|max:255|unique:flavors,flavor,' . $flavor->id,
             'description' => 'nullable|string',
-        ]);
+        ];
+
+        $messages = [
+            'flavor.required' => 'Flavor is a required field.',
+            'flavor.unique' => 'That flavor is already in the list.',
+        ];
+
+        $validated = $request->validate($rules, $messages);
 
         $flavor->update([
             'flavor' => $validated['flavor'],
-            'description' => $validated['description'] ?? $flavor->description,
+            'description' => $validated['description'],
         ]);
 
         return redirect()->route('flavors.show', ['flavor' => $flavor])

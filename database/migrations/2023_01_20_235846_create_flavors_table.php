@@ -17,14 +17,13 @@ return new class extends Migration
             
             $table->id();
 
-            $table->string('flavor');
+            $table->string('flavor')->unique();
             $table->string('description')->nullable();
             $table->integer('times_used')->default(0);
 
             $table->timestamps();
             $table->softDeletes();
             
-            $table->index('flavor');
             $table->index('times_used');
             $table->index(['flavor', 'times_used'], 'sorting_index');
         });

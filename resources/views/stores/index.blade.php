@@ -38,34 +38,16 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="border content-center">
-                                        <div class="flex items-center justify-center">
-                                            <form method="POST" action="{{ route('stores.destroy', $store) }}"
-                                                data-route="{{ route('stores.destroy', $store) }}"
-                                                onsubmit="return confirmDelete('{{ $store->store }}')">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="fa-regular fa-trash-can"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    <a href="{{ route('stores.create') }}" class="btn btn-primary inline-block mb-4">Add a New
-                        Store</a>
                 </div>
             </div>
         </div>
     </div>
     <x-slot name="scripts">
         <script>
-            function confirmDelete(store) {
-                return confirm("Are you sure you want to delete store: ${store} ?");
-            }
         </script>
     </x-slot>
 </x-app-layout>

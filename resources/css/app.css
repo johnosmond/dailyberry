@@ -4,16 +4,41 @@
 @tailwind components;
 @tailwind utilities;
 
+div.main-level-1 {
+    @apply max-w-7xl mx-auto px-0 sm:px-2 md:px-4 lg:px-8;
+}
+div.main-level-2 {
+    @apply bg-gray-200 dark:bg-gray-800 shadow-sm sm:rounded-lg pb-3;
+}
+div.main-level-3 {
+    @apply px-0 py-4 sm:px-2 md:px-4 lg:px-8 text-gray-900 dark:text-gray-100;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    @apply mt-0 font-medium leading-tight text-slate-500 dark:text-slate-300
+}
+h1 {
+    @apply mb-2 text-3xl ;
+}
+h2 {
+    @apply mb-2 text-2xl; 
+}
+p {
+    @apply mb-1;
+}
 .btn {
-    @apply bg-white rounded-md px-2 py-1 md:px-3 md:py-2 text-center font-medium text-slate-500 shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50;
+    @apply bg-white rounded-md px-2 py-1 md:px-3 md:py-2 text-center font-medium;
+    @apply text-slate-500 shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50;
 }
 
 .input {
-    @apply shadow-sm appearance-none border w-full px-2 py-1 md:px-3 md:py-2 text-slate-700 leading-tight focus:outline-none rounded-md border-slate-300;
+    @apply shadow-sm appearance-none border w-full px-2 py-1 md:px-3 md:py-2;
+    @apply text-slate-700 leading-tight focus:outline-none rounded-lg border-slate-300;
 }
 
 .select {
-    @apply shadow-sm appearance-none border w-16 md:w-24 px-2 py-1 md:px-3 md:py-2 text-slate-700 leading-tight focus:outline-none rounded-md border-slate-300;
+    @apply shadow-sm appearance-none border w-16 md:w-24 px-2 py-1 md:px-3 md:py-2; 
+    @apply text-slate-700 leading-tight focus:outline-none rounded-md border-slate-300;
 }
 
 .editable-container.editable-inline,
@@ -27,4 +52,83 @@
     clear: left;
     float: left;
     margin-left: 0;
+}
+.error {
+    color: red;
+}
+.alert {
+    @apply border rounded relative max-w-4xl p-2 mb-4;
+}
+.alert-success {
+    @apply bg-green-100 border-green-400 text-green-700;
+}
+.alert-error {
+    @apply bg-red-100 border-red-400 text-red-700;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
+    gap: 5px; /* spacing between grid items */
+    max-width: 100%;
+    margin: auto;
+    margin-top: 1rem;
+}
+
+.calendar-day {
+    border: 1px solid #ccc;
+    padding: 10px 5px;
+    text-align: center;
+}
+
+.calendar-day-number {
+    font-weight: bold;
+}
+.calendar-day input[type="text"] {
+    width: 100%; /* Adjust the width of the input boxes */
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+    font-size: small;
+}
+
+/* For larger screens, display as a grid */
+@media (min-width: 768px) {
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
+        gap: 10px; /* spacing between grid items */
+        max-width: 100%; /* Set a maximum width to constrain the calendar */
+        margin: 1rem auto; /* Center the calendar horizontally */
+    }
+
+    .calendar-day {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+    
+    .calendar-day input[type="text"] {
+        width: 100%; /* Adjust the width of the input boxes */
+        box-sizing: border-box; /* Include padding and border in the width calculation */
+    }
+}
+
+/* For smaller screens, display as a vertical stack */
+@media (max-width: 767px) {
+    .calendar-grid {
+        display: block; /* Switch to a vertical stack */
+        max-width: none; /* Remove the max width */
+        margin: 1rem; /* Remove horizontal margin */
+    }
+    
+    .calendar-day {
+        border: none; /* Remove borders */
+        padding: 0; /* Remove padding */
+        text-align: left; /* Adjust text alignment */
+    }
+    .calendar-day input[type="text"] {
+        font-size: large;
+    }
+    .calendar-day-number {
+        font-weight: normal; /* Adjust font weight */
+    }
 }

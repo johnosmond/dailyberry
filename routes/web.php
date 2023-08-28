@@ -38,7 +38,9 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('flavors', FlavorController::class)->middleware('auth');
 
-Route::resource('stores', StoreController::class)->middleware('auth');
+Route::resource('stores', StoreController::class)->only([
+    'index', 'show', 'edit', 'update'
+])->middleware('auth');
 
 Route::resource('calendars', FlavorDateController::class)->middleware('auth');
 
