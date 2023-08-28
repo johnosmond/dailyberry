@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use App\Models\FlavorDate;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,9 @@ class FlavorDateController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-        return 'Calendar';
+        return view('calendars.index');
     }
 
     /**
