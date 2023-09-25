@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Flavors List') }}
+        {{ __('Flavors Listxxx') }}
     </x-slot>
     <div class="pt-4">
         <div class="main-level-1">
