@@ -67,7 +67,7 @@
                         </thead>
                         <tbody>
                             @foreach ($flavors as $flavor)
-                                <tr class="odd:bg-gray-100 dark:odd:bg-gray-600">
+                                <tr class="odd:bg-gray-100 dark:odd:bg-gray-600 even:bg-gray-50">
                                     <td class="update_record text-sm md:text-base border px-4 py-2" data-name="flavor"
                                         data-type="text" data-pk="{{ $flavor->id }}">
                                         {{ $flavor->flavor }}
