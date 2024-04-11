@@ -8,7 +8,7 @@ div.main-level-1 {
     @apply max-w-7xl mx-auto px-0 sm:px-2 md:px-4 lg:px-8;
 }
 div.main-level-2 {
-    @apply bg-gray-200 dark:bg-gray-800 shadow-sm sm:rounded-lg pb-3;
+    @apply bg-gray-300 dark:bg-gray-800 shadow-sm sm:rounded-lg pb-3;
 }
 div.main-level-3 {
     @apply px-0 py-4 sm:px-2 md:px-4 lg:px-8 text-gray-900 dark:text-gray-100;
@@ -21,7 +21,7 @@ h1 {
     @apply mb-2 text-3xl ;
 }
 h2 {
-    @apply mb-2 text-2xl; 
+    @apply mb-2 text-2xl;
 }
 p {
     @apply mb-1;
@@ -37,7 +37,7 @@ p {
 }
 
 .select {
-    @apply shadow-sm appearance-none border w-16 md:w-24 px-2 py-1 md:px-3 md:py-2; 
+    @apply shadow-sm appearance-none border w-16 md:w-24 px-2 py-1 md:px-3 md:py-2;
     @apply text-slate-700 leading-tight focus:outline-none rounded-md border-slate-300;
 }
 
@@ -105,7 +105,7 @@ p {
         padding: 10px;
         text-align: center;
     }
-    
+
     .calendar-day input[type="text"] {
         width: 100%; /* Adjust the width of the input boxes */
         box-sizing: border-box; /* Include padding and border in the width calculation */
@@ -119,7 +119,7 @@ p {
         max-width: none; /* Remove the max width */
         margin: 1rem; /* Remove horizontal margin */
     }
-    
+
     .calendar-day {
         border: none; /* Remove borders */
         padding: 0; /* Remove padding */
